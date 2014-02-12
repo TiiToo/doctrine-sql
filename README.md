@@ -1,4 +1,4 @@
-IbrowsDoctrineDblibSqlBundle
+IbrowsDoctrineDblibSqlDriver
 ============================
 
-A Symfony2 Bundle
+Doctrine driver for connection over pdo, dblib, freetds, (ms)sql server
