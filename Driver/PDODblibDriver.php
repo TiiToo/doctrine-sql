@@ -4,9 +4,10 @@ namespace Ibrows\DoctrineDblibSqlDriver\Driver;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\PDOConnection;
-use Doctrine\DBAL\Platforms\SQLServerPlatform;
 use Doctrine\DBAL\Schema\SQLServerSchemaManager;
 use Doctrine\DBAL\Driver;
+use Ibrows\DoctrineDblibSqlDriver\Platform\SQLServer2012Platform;
+use Doctrine\DBAL\Platforms\SQLServerPlatform;
 
 class PDODblibDriver implements Driver
 {
@@ -60,7 +61,7 @@ class PDODblibDriver implements Driver
      */
     public function getDatabasePlatform()
     {
-        return new SQLServerPlatform();
+        return new SQLServer2012Platform();
     }
 
     /**
