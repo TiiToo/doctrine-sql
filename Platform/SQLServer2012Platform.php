@@ -4,7 +4,6 @@ namespace Ibrows\DoctrineDblibSqlDriver\Platform;
 
 use Doctrine\DBAL\Platforms\SQLServerPlatform;
 use Doctrine\DBAL\Types\Type;
-use Ibrows\DoctrineDblibSqlDriver\Type\DateTimeType;
 
 class SQLServer2012Platform extends SQLServerPlatform
 {
