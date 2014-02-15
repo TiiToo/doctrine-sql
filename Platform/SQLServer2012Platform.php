@@ -3,7 +3,6 @@
 namespace Ibrows\DoctrineDblibSqlDriver\Platform;
 
 use Doctrine\DBAL\Platforms\SQLServerPlatform;
-use Doctrine\DBAL\Types\Type;
 
 class SQLServer2012Platform extends SQLServerPlatform
 {
