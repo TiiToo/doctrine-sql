@@ -14,10 +14,10 @@ class PDODblibDriver implements Driver
     /**
      * Attempts to establish a connection with the underlying driver.
      *
-     * @param array $params
-     * @param string $username
-     * @param string $password
-     * @param array $driverOptions
+     * @param  array         $params
+     * @param  string        $username
+     * @param  string        $password
+     * @param  array         $driverOptions
      * @return PDOConnection
      */
     public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
@@ -33,8 +33,8 @@ class PDODblibDriver implements Driver
     /**
      * Constructs the Dblib PDO DSN.
      *
-     * @param array $params
-     * @return string  The DSN.
+     * @param  array  $params
+     * @return string The DSN.
      */
     private function _constructPdoDsn(array $params)
     {
@@ -49,7 +49,7 @@ class PDODblibDriver implements Driver
             $dsn .= 'dbname=' . $params['dbname'] . ';';
         }
         // Support charset config
-        if(isset($params['charset'])) {
+        if (isset($params['charset'])) {
             $dsn .= 'charset=' . $params['charset'] .';';
         }
 
@@ -65,7 +65,7 @@ class PDODblibDriver implements Driver
     }
 
     /**
-     * @param Connection $conn
+     * @param  Connection             $conn
      * @return SQLServerSchemaManager
      */
     public function getSchemaManager(Connection $conn)
@@ -82,12 +82,13 @@ class PDODblibDriver implements Driver
     }
 
     /**
-     * @param Connection $conn
+     * @param  Connection $conn
      * @return string
      */
     public function getDatabase(Connection $conn)
     {
         $params = $conn->getParams();
+
         return $params['dbname'];
     }
 }

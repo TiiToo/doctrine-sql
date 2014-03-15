@@ -3,7 +3,6 @@
 namespace Ibrows\DoctrineDblibSqlDriver\Platform;
 
 use Doctrine\DBAL\Platforms\SQLServerPlatform;
-use Doctrine\DBAL\Types\Type;
 
 class SQLServer2012Platform extends SQLServerPlatform
 {
@@ -30,7 +29,7 @@ class SQLServer2012Platform extends SQLServerPlatform
     {
         return 'M d Y H:i:s:000A';
     }
-    
+
     /**
      * @return bool
      */
