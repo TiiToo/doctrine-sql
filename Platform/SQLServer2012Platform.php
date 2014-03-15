@@ -29,4 +29,12 @@ class SQLServer2012Platform extends SQLServerPlatform
     {
         return 'M d Y H:i:s:000A';
     }
+
+    /**
+     * @return bool
+     */
+    public function supportsLimitOffset()
+    {
+        return true;
+    }
 }
