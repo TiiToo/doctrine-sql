@@ -11,6 +11,12 @@ use Doctrine\DBAL\Platforms\SQLServerPlatform;
 
 class PDODblibDriver implements Driver
 {
+
+    /**
+     * @var array
+     */
+    protected $extraOptions;
+
     /**
      * Attempts to establish a connection with the underlying driver.
      *
@@ -22,12 +28,27 @@ class PDODblibDriver implements Driver
      */
     public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
+        $this->extraOptions = array();
+        foreach($driverOptions as $key => $val){
+            if(stripos($key,'EXTRA_') === 0){
+                $this->extraOptions[substr($key,6)] = $val;
+                unset($driverOptions[$key]);
+            }
+        }
         return new PDOConnection(
             $this->_constructPdoDsn($params),
             $username,
             $password,
             $driverOptions
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getExtraOptions()
+    {
+        return $this->extraOptions;
     }
 
     /**
