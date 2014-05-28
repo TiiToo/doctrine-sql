@@ -57,7 +57,7 @@ class SQLServer2012Platform extends SQLServerPlatform
     {
 
         $sqls = parent::_getCreateTableSQL($tableName, $columns, $options);
-        foreach ($this->getDriverOptions() as $optionName => $value) {
+        foreach ($this->driver->getExtraOptions() as $optionName => $value) {
             if(stripos($optionName,'CREATE_') !== 0){
                 continue;
             }
