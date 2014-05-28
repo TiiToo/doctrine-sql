@@ -7,6 +7,7 @@
             "email": "mike.meier@ibrows.ch"
         }
     ],
+    "license": "MIT",
     "require": {
         "php" : ">=5.3.3",
         "doctrine/dbal": "*"
