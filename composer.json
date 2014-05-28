@@ -12,6 +12,6 @@
         "doctrine/dbal": "*"
     },
     "autoload": {
-        "psr-4": { "Ibrows\\DoctrineDblibSqlDriver": "" }
+        "psr-4": { "Ibrows\\DoctrineDblibSqlDriver\\": "" }
     }
 }
