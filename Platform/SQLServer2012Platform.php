@@ -13,6 +13,18 @@ class SQLServer2012Platform extends SQLServerPlatform
     protected $driver;
 
     /**
+     * {@inheritDoc}
+     */
+    protected function initializeDoctrineTypeMappings()
+    {
+        parent::initializeDoctrineTypeMappings();
+        $this->doctrineTypeMapping += array(
+            'date' => 'date',
+            'time' => 'time'
+        );
+    }
+
+    /**
      * @return string
      */
     public function getDateTimeFormatString()
@@ -25,7 +37,7 @@ class SQLServer2012Platform extends SQLServerPlatform
      */
     public function getDateFormatString()
     {
-        return 'M d Y H:i:s:000A';
+        return 'M d Y';
     }
 
     /**
@@ -33,7 +45,23 @@ class SQLServer2012Platform extends SQLServerPlatform
      */
     public function getTimeFormatString()
     {
-        return 'M d Y H:i:s:000A';
+        return 'H:i:s:000A';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDateTypeDeclarationSQL(array $fieldDeclaration)
+    {
+        return 'DATE';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTimeTypeDeclarationSQL(array $fieldDeclaration)
+    {
+        return 'TIME';
     }
 
     /**
