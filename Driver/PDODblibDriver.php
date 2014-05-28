@@ -82,7 +82,9 @@ class PDODblibDriver implements Driver
      */
     public function getDatabasePlatform()
     {
-        return new SQLServer2012Platform();
+        $platform =  new SQLServer2012Platform();
+        $platform->setDriver($this);
+        return $platform;
     }
 
     /**
@@ -109,7 +111,6 @@ class PDODblibDriver implements Driver
     public function getDatabase(Connection $conn)
     {
         $params = $conn->getParams();
-
         return $params['dbname'];
     }
 }

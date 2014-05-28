@@ -44,24 +44,47 @@ class SQLServer2012Platform extends SQLServerPlatform
         return true;
     }
 
-
     /**
-     * @param PDODblibDriver $driverOptions
+     * @param PDODblibDriver $driver
      */
     public function setDriver(PDODblibDriver $driver)
     {
         $this->driver = $driver;
     }
 
-    protected function _getCreateTableSQL($tableName, array $columns, array $options = array())
+    /**
+     * @param string $prefix
+     * @return array
+     */
+    protected function getDriverExtraOptions($prefix = 'CREATE_')
     {
+        if(!$this->driver){
+            return array();
+        }
 
-        $sqls = parent::_getCreateTableSQL($tableName, $columns, $options);
-        foreach ($this->driver->getExtraOptions() as $optionName => $value) {
-            if(stripos($optionName,'CREATE_') !== 0){
+        $options = array();
+
+        foreach ($this->driver->getExtraOptions() as $optionName => $optionValue) {
+            if(stripos($optionName, $prefix) !== 0){
                 continue;
             }
-            $optionName = substr($optionName,7);
+            $optionName = substr($optionName, strlen($prefix));
+            $options[$optionName] = $optionValue;
+        }
+
+        return $options;
+    }
+
+    /**
+     * @param string $tableName
+     * @param array $columns
+     * @param array $options
+     * @return array
+     */
+    protected function _getCreateTableSQL($tableName, array $columns, array $options = array())
+    {
+        $sqls = parent::_getCreateTableSQL($tableName, $columns, $options);
+        foreach ($this->getDriverExtraOptions() as $optionName => $value) {
             $sql = "SET " . strtoupper($optionName);
             if ($value) {
                 $sql .= " ON";
