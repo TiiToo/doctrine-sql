@@ -89,18 +89,7 @@ class SQLServer2012Platform extends SQLServerPlatform
         if(!$this->driver){
             return array();
         }
-
-        $options = array();
-
-        foreach ($this->driver->getExtraOptions() as $optionName => $optionValue) {
-            if(stripos($optionName, $prefix) !== 0){
-                continue;
-            }
-            $optionName = substr($optionName, strlen($prefix));
-            $options[$optionName] = $optionValue;
-        }
-
-        return $options;
+        return $this->driver->getExtraOptions($prefix);
     }
 
     /**

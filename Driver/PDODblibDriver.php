@@ -8,6 +8,7 @@ use Doctrine\DBAL\Schema\SQLServerSchemaManager;
 use Doctrine\DBAL\Driver;
 use Ibrows\DoctrineDblibSqlDriver\Platform\SQLServer2012Platform;
 use Doctrine\DBAL\Platforms\SQLServerPlatform;
+use Symfony\Component\Validator\Constraints\Null;
 
 class PDODblibDriver implements Driver
 {
@@ -15,7 +16,7 @@ class PDODblibDriver implements Driver
     /**
      * @var array
      */
-    protected $extraOptions;
+    protected $extraOptions = array();
 
     /**
      * Attempts to establish a connection with the underlying driver.
@@ -35,20 +36,43 @@ class PDODblibDriver implements Driver
                 unset($driverOptions[$key]);
             }
         }
-        return new PDOConnection(
+        $dbPDO = new PDOConnection(
             $this->_constructPdoDsn($params),
             $username,
             $password,
             $driverOptions
         );
+        foreach ($this->getExtraOptions('CONNECT_') as $optionName => $value) {
+            $sql = "SET " . strtoupper($optionName);
+            if ($value) {
+                $sql .= " ON";
+            } else {
+                $sql .= " OFF";
+            }
+            $dbPDO->exec($sql);
+        }
+        return $dbPDO;
     }
 
     /**
+     * @param null $prefix
      * @return array
      */
-    public function getExtraOptions()
+    public function getExtraOptions($prefix = null)
     {
-        return $this->extraOptions;
+        if($prefix == null){
+            return $this->extraOptions;
+        }
+        $options = array();
+        foreach ($this->extraOptions as $optionName => $optionValue) {
+            if(stripos($optionName, $prefix) !== 0){
+                continue;
+            }
+            $optionName = substr($optionName, strlen($prefix));
+            $options[$optionName] = $optionValue;
+        }
+
+        return $options;
     }
 
     /**
