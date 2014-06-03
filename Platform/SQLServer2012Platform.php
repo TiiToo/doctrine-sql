@@ -37,7 +37,7 @@ class SQLServer2012Platform extends SQLServerPlatform
      */
     public function getDateFormatString()
     {
-        return 'M d Y';
+        return 'Y-m-d';
     }
 
     /**
