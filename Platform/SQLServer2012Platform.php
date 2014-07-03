@@ -91,7 +91,35 @@ class SQLServer2012Platform extends SQLServerPlatform
         }
         return $this->driver->getExtraOptions($prefix);
     }
+    /**
+     * {@inheritdoc}
+     *
+     * Modifies column declaration order as it differs in Microsoft SQL Server.
+     */
+    public function getColumnDeclarationSQL($name, array $field)
+    {
+        if (isset($field['columnDefinition'])) {
+            $columnDef = $this->getCustomTypeDeclarationSQL($field);
+        } else {
+            $default = $this->getDefaultValueDeclarationSQL($field);
 
+            $collation = (isset($field['collate']) && $field['collate']) ?
+                ' ' . $this->getColumnCollationDeclarationSQL($field['collate']) : '';
+
+            $notnull = (isset($field['notnull']) && $field['notnull']) ? ' NOT NULL' : '';
+
+            $unique = (isset($field['unique']) && $field['unique']) ?
+                ' ' . $this->getUniqueFieldDeclarationSQL() : '';
+
+            $check = (isset($field['check']) && $field['check']) ?
+                ' ' . $field['check'] : '';
+
+            $typeDecl = $field['type']->getSqlDeclaration($field, $this);
+            $columnDef = $typeDecl . $collation . $notnull . $default . $unique . $check;
+        }
+
+        return $name . ' ' . $columnDef;
+    }
     /**
      * @param string $tableName
      * @param array $columns
