@@ -140,4 +140,12 @@ class SQLServer2012Platform extends SQLServerPlatform
         }
         return $sqls;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getClobTypeDeclarationSQL(array $field)
+    {
+        return 'VARCHAR (max)';
+    }
 }
